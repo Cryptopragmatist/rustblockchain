@@ -36,3 +36,18 @@ impl Block {
         }
     }
 }
+
+impl Hashable for Block {
+    fn bytes(&self) -> Vec<u8> {
+        let mut bytes = vec![];
+
+        bytes.extend(&u32_bytes(&self.index));
+        bytes.extend(&u128_bytes(&self.timestamp));
+        bytes.extend(&self.prev_block_hash);
+        bytes.extend(&u64_bytes(&self.nonce));
+        bytes.extend(self.payload.as_bytes());
+
+        bytes 
+    }
+
+}

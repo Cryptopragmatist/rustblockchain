@@ -1,7 +1,15 @@
 use rustblockchain::*;
 
 fn main() {
-    let block = Block::new(0, 0, vec![0;32], 0, "Genesis".to_owned());
+    let mut block = Block::new(0, 0, vec![0;32], 0, "Genesis Block".to_owned());
     
     println!( "{:?}", &block);
+
+    let h = block.hash();
+    
+    println!( "{:?}", &h);
+
+    block.hash = h;
+    println!( "{:?}", &block);
+
 }
