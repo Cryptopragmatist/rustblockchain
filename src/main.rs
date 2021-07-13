@@ -23,7 +23,7 @@ fn main() {
         let mut block = Block::new(i, 0, last_hash, 0, "Another Block".to_owned(), difficulty);
 
         block.mine();
-        println!("Mined Genesis Block {:?}", &block);
+        println!("Mined Block {:?}", &block);
 
         last_hash = block.hash.clone();
         
