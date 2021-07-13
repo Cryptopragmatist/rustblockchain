@@ -15,13 +15,13 @@ fn main() {
     let mut last_hash = block.hash.clone();
 
     let mut blockchain = Blockchain {
-        blocks:vec![block],
+        blocks: vec![block],
     
     };
 
     for i in 1..=10 {
         let mut block = Block::new(i, 0, last_hash, 0, "Another Block".to_owned(), difficulty);
-        
+
         block.mine();
         println!("Mined Genesis Block {:?}", &block);
 
@@ -31,7 +31,7 @@ fn main() {
 
     }
 
-    println!( "{:?}", &block);
+    //println!( "{:?}", &block);
 
    // let h = block.hash();
     
