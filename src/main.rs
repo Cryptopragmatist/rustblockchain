@@ -1,9 +1,9 @@
 use rustblockchain::*;
 
 fn main() {
-    let difficulty = 0x000fffffffffffffffffffffffffffff;
+    let difficulty = 0x00ffffffffffffffffffffffffffffff;
     
-    let mut block = Block::new(0, 0, vec![0;32], 0, "Genesis Block".to_owned(), difficulty);
+    let mut block = Block::new(0, now(), vec![0;32], 0, "Genesis Block".to_owned(), difficulty);
 
     //block.hash = block.hash();
     
@@ -19,8 +19,11 @@ fn main() {
     
     };
 
+    println!("Verify: {}", &blockchain.verify());
+    
+
     for i in 1..=10 {
-        let mut block = Block::new(i, 0, last_hash, 0, "Another Block".to_owned(), difficulty);
+        let mut block = Block::new(i, now(), last_hash, 0, "Another Block".to_owned(), difficulty);
 
         block.mine();
         println!("Mined {:?}", &block);
@@ -28,6 +31,8 @@ fn main() {
         last_hash = block.hash.clone();
         
         blockchain.blocks.push(block);
+
+        println!("Verify: {}", &blockchain.verify());
 
     }
 
@@ -39,5 +44,9 @@ fn main() {
 
    // block.hash = h;
    // println!( "{:?}", &block);
+
+   blockchain.blocks[3].hash[3] += 4;
+   println!("Verify: {}", &blockchain.verify());
+
 
 }
