@@ -1,40 +1,40 @@
 use rustblockchain::*;
 
 fn main() {
-    let difficulty = 0x00ffffffffffffffffffffffffffffff;
+    let difficulty = 0x000fffffffffffffffffffffffffffff;
     
-    let mut block = Block::new(0, now(), vec![0;32], 0, "Genesis Block".to_owned(), difficulty);
+    let mut genesis_block = Block::new(0, now(), vec![0;32], vec![
+        Transaction {
+            inputs: vec![],
+            outputs: vec![
+                transaction::Output{
+                    to_address: "Alice".to_owned(),
+                    value: 50000,
+                }, 
+                transaction::Output{
+                    to_address: "Bob".to_owned(),
+                    value: 7000,
+                },
+            ],
+        },
+
+    ] , difficulty);
 
     //block.hash = block.hash();
     
    // println!( "{:?}", &block);
 
-    block.mine();
-    println!("Mined Genesis {:?}", &block);
+    genesis_block.mine();
+    println!("Mined Genesis {:?}", &genesis_block);
 
-    let mut last_hash = block.hash.clone();
+   // last_hash = block.hash.clone();
 
-    let mut blockchain = Blockchain {
-        blocks: vec![block],
-    
-    };
+  let mut blockchain = Blockchain::new();
 
-    println!("Verify: {}", &blockchain.verify());
+    blockchain.update_with_block(genesis_block).expect("Failed to add  block");
     
 
-    for i in 1..=10 {
-        let mut block = Block::new(i, now(), last_hash, 0, "Another Block".to_owned(), difficulty);
-
-        block.mine();
-        println!("Mined {:?}", &block);
-
-        last_hash = block.hash.clone();
-        
-        blockchain.blocks.push(block);
-
-        println!("Verify: {}", &blockchain.verify());
-
-    }
+   
 
     //println!( "{:?}", &block);
 
@@ -45,8 +45,8 @@ fn main() {
    // block.hash = h;
    // println!( "{:?}", &block);
 
-   blockchain.blocks[3].hash[3] += 4;
-   println!("Verify: {}", &blockchain.verify());
+  // blockchain.blocks[3].hash[3] += 4;
+   //println!("Verify: {}", &blockchain.verify());
 
 
 }
